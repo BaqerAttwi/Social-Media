@@ -20,7 +20,6 @@ const db = mysql.createConnection({
 app.use('/routes', signupRoutes); // Mount the router under '/api' base path
 
 app.use('/routes', Login); // Mount the router under '/api' base path
-
 app.get("/", (req, res) => {
     res.json("hello this is backend")
 });

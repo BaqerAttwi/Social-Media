@@ -186,16 +186,15 @@ const isValidEmail = (email) => {
     const emailRegex = /^\S+@\S+\.\S+$/;
     return emailRegex.test(email);
 };
-
 const checkEmailExistence = async (email) => {
     return new Promise((resolve, reject) => {
-        const query = "SELECT COUNT(*) AS count FROM users  WHERE email = ?";
+        const query = "SELECT * FROM users WHERE email = ?";
         db.query(query, [email], (err, result) => {
             if (err) {
                 console.error('Error checking email existence:', err);
                 reject(err);
             } else {
-                resolve(result[0].count > 0);
+                resolve(result.length > 0); // Adjusted here
             }
         });
     });

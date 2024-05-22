@@ -38,16 +38,16 @@ db.connect((err) => {
   console.log('Connected to database as id ' + db.threadId);
 });
 
-// Multer storage configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './uploads/images/Avatar'); // Destination folder for storing images
+    cb(null, '../../Social-Media/frontend/public/Images/Profile'); // Destination folder for storing images
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + '.' + file.mimetype.split('/')[1]); // Unique filename
+    const uniqueFilename = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueFilename); // Generate a unique filename
   }
 });
+
 
 const upload = multer({ storage: storage });
 
@@ -149,7 +149,7 @@ router.post('/updateUser', verifyToken, upload.single('image'), (req, res) => {
   console.log("hi");
   console.log(userId);
   const { UserName, email, Password, DateOfBirth, Gender, nationality } = req.body;
-  const image = req.file ? req.file.path : null;
+  const image =req.file.filename.split('.')[0];
 
   const updateData = {
     username: UserName,
